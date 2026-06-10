@@ -333,7 +333,7 @@ export default function Hero() {
                 style={{ fontFamily: 'var(--font-display)' }}
                 className="text-white text-3xl sm:text-4xl font-light tracking-[0.15em] uppercase"
               >
-                Elite <span className="text-[#E6C9A8] font-semibold">Cartongesso</span>
+                CARTONGESSO <span className="text-[#E6C9A8] font-semibold">EXPRESS</span>
               </div>
               <div className="mt-2 h-[1px] w-full bg-gradient-to-r from-transparent via-[#A67C52] to-transparent" />
             </motion.div>
@@ -361,7 +361,7 @@ export default function Hero() {
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             className="text-[0.6rem] uppercase text-[#A67C52]/60 font-medium mb-8 sm:mb-10"
           >
-            Eccellenza Artigianale &nbsp;·&nbsp; Milano
+            Eccellenza Artigianale &nbsp;·&nbsp; Nova Milanese
           </motion.p>
 
           {/* H1 — word-by-word slide-up mask (explicit delays) */}
@@ -424,7 +424,7 @@ export default function Hero() {
             transition={{ duration: 0.9, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="text-sm sm:text-base text-[#1A1A1A]/45 max-w-lg mx-auto leading-relaxed mb-10 sm:mb-12 font-light"
           >
-            <span className="font-semibold text-[#A67C52]">+250 famiglie a Milano</span> hanno già trasformato la loro casa con noi.
+            <span className="font-semibold text-[#A67C52]">+250 famiglie tra Milano e Brianza</span> hanno già trasformato la loro casa con noi.
             Preventivo gratuito in 60 secondi. Garanzia scritta 10 anni.
           </motion.p>
 

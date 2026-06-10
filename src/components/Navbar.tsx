@@ -66,7 +66,7 @@ export default function Navbar() {
                 <Hammer className="text-[#E6C9A8] w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <span className="font-bold text-sm sm:text-base tracking-tight uppercase leading-none">
-                Elite <span className="text-[#A67C52]">Cartongesso</span>
+                CARTONGESSO <span className="text-[#A67C52]">EXPRESS</span>
               </span>
             </motion.a>
 

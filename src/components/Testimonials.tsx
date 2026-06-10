@@ -47,7 +47,7 @@ const testimonials = [
     seed: 'laura',
   },
   {
-    quote: "Finalmente silenzio! Avevo i vicini che sentivo respirare. Dopo la parete acustica di Elite, zero rumori. Vale ogni centesimo.",
+    quote: "Finalmente silenzio! Avevo i vicini che sentivo respirare. Dopo la parete acustica di CARTONGESSO EXPRESS, zero rumori. Vale ogni centesimo.",
     name: 'Marco Ferretti',
     role: 'Avvocato, Milano Centro',
     result: '-70% rumori certificati',

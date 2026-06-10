@@ -90,7 +90,7 @@ export default function Benefits() {
                 <X className="w-3 h-3 text-red-500" strokeWidth={3} />
               </div>
               <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#1A1A1A]/40">
-                Senza Elite Cartongesso
+                Senza CARTONGESSO EXPRESS
               </span>
             </div>
             <div className="space-y-3">
@@ -116,7 +116,7 @@ export default function Benefits() {
                 <Check className="w-3 h-3 text-[#A67C52]" strokeWidth={3} />
               </div>
               <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#A67C52]/70">
-                Con Elite Cartongesso
+                Con CARTONGESSO EXPRESS
               </span>
             </div>
             <div className="space-y-3">

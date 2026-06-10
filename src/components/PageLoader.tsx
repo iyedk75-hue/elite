@@ -31,7 +31,7 @@ export default function PageLoader() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            Elite <span className="text-[#A67C52]">Cartongesso</span>
+            CARTONGESSO <span className="text-[#A67C52]">EXPRESS</span>
           </motion.div>
           <motion.div
             className="text-xs uppercase tracking-[0.25em] text-gray-400 font-semibold mt-2"
@@ -39,7 +39,7 @@ export default function PageLoader() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            Premium Drywall Solutions
+            Soluzioni Premium in Cartongesso
           </motion.div>
         </div>
       </motion.div>

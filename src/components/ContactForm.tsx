@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, type Variants } from 'motion/react';
-import { Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { AnimatePresence, motion, type Variants } from 'motion/react';
+import { Phone, Mail, MapPin, ArrowRight, MessageCircle } from 'lucide-react';
 
 const containerVariants: Variants = {
   hidden: {},
@@ -51,15 +51,53 @@ export default function ContactForm() {
     projectType: 'residential',
     message: ''
   });
+  const [validationMessage, setValidationMessage] = useState('');
   const { days, hours, minutes, seconds } = useCountdown();
+
+  useEffect(() => {
+    if (!validationMessage) return;
+    const id = setTimeout(() => setValidationMessage(''), 4200);
+    return () => clearTimeout(id);
+  }, [validationMessage]);
+
+  const validateForm = () => {
+    const requiredFields = [
+      { name: 'name', label: 'nome', value: formData.name },
+      { name: 'phone', label: 'telefono', value: formData.phone },
+      { name: 'email', label: 'email', value: formData.email },
+      { name: 'message', label: 'dettagli del progetto', value: formData.message },
+    ];
+    const missing = requiredFields.find((field) => !field.value.trim());
+
+    if (missing) {
+      setValidationMessage(`Inserisci ${missing.label} per continuare.`);
+      document.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${missing.name}"]`)?.focus();
+      return false;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setValidationMessage('Inserisci un indirizzo email valido.');
+      document.querySelector<HTMLInputElement>('[name="email"]')?.focus();
+      return false;
+    }
+
+    return true;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
+    const recipients = 'mahmoudsassi2077@gmail.com,dyabramadan97@gmail.com';
     const subject = encodeURIComponent(`Richiesta Sopralluogo - ${formData.name}`);
     const body = encodeURIComponent(
       `Nome: ${formData.name}\nTelefono: ${formData.phone}\nEmail: ${formData.email}\n\nDettagli Progetto:\n${formData.message}`
     );
-    window.location.href = `mailto:mahmoudsassi2077@gmail.com?subject=${subject}&body=${body}`;
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipients)}&su=${subject}&body=${body}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   return (
@@ -131,8 +169,11 @@ export default function ContactForm() {
             <div className="space-y-8">
               {[
                 { Icon: Phone, label: 'Chiamaci', value: '+39 351 963 1564' },
+                { Icon: Phone, label: 'Mobile', value: '+39 392 042 7981' },
+                { Icon: MessageCircle, label: 'WhatsApp', value: '+39 331 403 6156' },
                 { Icon: Mail, label: 'Email', value: 'mahmoudsassi2077@gmail.com', wrap: true },
-                { Icon: MapPin, label: 'Sede', value: 'Milano, Italia' },
+                { Icon: Mail, label: 'Email', value: 'dyabramadan97@gmail.com', wrap: true },
+                { Icon: MapPin, label: 'Sede', value: 'Via Fabio Filzi, 19 - Nova Milanese (MB)' },
               ].map(({ Icon, label, value, wrap }, i) => (
                 <motion.div key={i} variants={leftItemVariants} className="flex items-center gap-4 sm:gap-5">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/5 flex items-center justify-center shrink-0">
@@ -152,7 +193,7 @@ export default function ContactForm() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://facebook.com/elitecartongesso"
+                  href="https://facebook.com/cartongessoexpress"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -163,7 +204,7 @@ export default function ContactForm() {
                   </svg>
                 </a>
                 <a
-                  href="https://instagram.com/elitecartongesso"
+                  href="https://instagram.com/cartongessoexpress"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -174,7 +215,7 @@ export default function ContactForm() {
                   </svg>
                 </a>
                 <a
-                  href="https://tiktok.com/@elitecartongesso"
+                  href="https://tiktok.com/@cartongessoexpress"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TikTok"
@@ -204,19 +245,58 @@ export default function ContactForm() {
 
           {/* Form panel */}
           <motion.div
-            className="lg:col-span-3 px-6 py-10 sm:px-10 sm:py-12 lg:p-16"
+            className="relative flex items-center px-6 py-10 sm:px-10 sm:py-12 lg:col-span-3 lg:p-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ amount: 0.05 }}
             variants={containerVariants}
           >
-            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+            <AnimatePresence>
+              {validationMessage && (
+                <motion.div
+                  role="alert"
+                  className="fixed left-4 right-4 top-5 z-[1000] mx-auto flex max-w-lg items-start gap-3 rounded-2xl border border-red-100 bg-white px-4 py-3 text-[#1A1A1A] shadow-2xl shadow-black/20"
+                  initial={{ opacity: 0, y: -14, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#A67C52] text-lg font-black text-white">
+                    !
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-black uppercase tracking-[0.18em] text-[#A67C52]">
+                      Campo obbligatorio
+                    </span>
+                    <span className="mt-0.5 block text-sm font-semibold leading-snug">
+                      {validationMessage}
+                    </span>
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <form onSubmit={handleSubmit} noValidate className="w-full space-y-6 sm:space-y-8">
+              <motion.div variants={itemVariants} className="max-w-2xl">
+                <div className="mb-3 text-xs font-black uppercase tracking-[0.24em] text-[#A67C52]">
+                  Preventivo gratuito
+                </div>
+                <h3 className="text-2xl font-black leading-tight text-[#1A1A1A] sm:text-3xl">
+                  Raccontaci il tuo progetto
+                </h3>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-gray-500 sm:text-base">
+                  Ti richiamiamo rapidamente per capire misure, tempi e soluzione migliore per il tuo spazio.
+                </p>
+              </motion.div>
+
               <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                 <motion.div variants={itemVariants} className="space-y-3">
                   <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Nome</label>
                   <motion.input
+                    name="name"
                     type="text"
                     required
+                    aria-required="true"
                     className="w-full px-6 py-4 sm:px-8 sm:py-5 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#A67C52] transition-all text-base sm:text-lg"
                     placeholder="Mario Rossi"
                     value={formData.name}
@@ -227,8 +307,10 @@ export default function ContactForm() {
                 <motion.div variants={itemVariants} className="space-y-3">
                   <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Telefono</label>
                   <motion.input
+                    name="phone"
                     type="tel"
                     required
+                    aria-required="true"
                     className="w-full px-6 py-4 sm:px-8 sm:py-5 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#A67C52] transition-all text-base sm:text-lg"
                     placeholder="+39 333..."
                     value={formData.phone}
@@ -241,8 +323,10 @@ export default function ContactForm() {
               <motion.div variants={itemVariants} className="space-y-3">
                 <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Email</label>
                 <motion.input
+                  name="email"
                   type="email"
                   required
+                  aria-required="true"
                   className="w-full px-6 py-4 sm:px-8 sm:py-5 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#A67C52] transition-all text-base sm:text-lg"
                   placeholder="mario@email.it"
                   value={formData.email}
@@ -254,7 +338,10 @@ export default function ContactForm() {
               <motion.div variants={itemVariants} className="space-y-3">
                 <label className="text-xs font-black uppercase tracking-[0.2em] text-gray-400">Dettagli Progetto</label>
                 <motion.textarea
+                  name="message"
                   rows={4}
+                  required
+                  aria-required="true"
                   className="w-full px-6 py-4 sm:px-8 sm:py-5 bg-gray-50 border-0 rounded-2xl focus:ring-2 focus:ring-[#A67C52] transition-all text-base sm:text-lg resize-none"
                   placeholder="Cosa vorresti realizzare?"
                   value={formData.message}
